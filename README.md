@@ -1,137 +1,128 @@
 # GameScope ID
 
-**Gaming. Technology. What's Next.**
+Gaming. Technology. What's Next.
 
-Aplikasi berita gaming dan teknologi berbasis Flutter menggunakan GNews API. Dibuat untuk Praktikum Pemrograman Mobile Topik 11.
+GameScope ID adalah aplikasi berita gaming dan teknologi berbasis Flutter yang menggunakan GNews API untuk menampilkan berita terbaru sesuai kategori dan kata kunci pencarian.
 
----
+Proyek ini dibuat untuk memenuhi tugas Praktikum Pemrograman Mobile Topik 11.
 
-## Fitur
+## Fitur Aplikasi
 
-- 5 Kategori berita utama: Technology, Science, Entertainment (termasuk gaming), Sports, Business (GNews `/top-headlines`)
-- Featured article (berita utama dengan batas tinggi 220px) + daftar berita ringkas di setiap kategori
-- Menampilkan hingga 10 artikel per kategori secara langsung dari GNews API asli
-- Pencarian berita melalui dialog dari AppBar
-- Halaman pencarian terpisah (SearchView) dengan FutureBuilder
-- Halaman detail berita dengan tombol "Baca Berita Asli"
-- Pull-to-refresh di HomeView dan SearchView
-- Cache Future per kategori (tidak request ulang jika sudah dimuat)
-- Empat state FutureBuilder: loading, error, empty, data
-- Error handling dengan pesan spesifik per kondisi
-- API key aman melalui `--dart-define-from-file`
+- Menampilkan berita berdasarkan kategori gaming dan teknologi.
+- Kategori berita seperti Gaming, GTA 6, NVIDIA & GPU, Honkai: Star Rail, HoYoverse, PC & Console, dan Mobile Gaming.
+- Featured article untuk menampilkan berita utama.
+- Menampilkan hingga 10 artikel dari GNews API.
+- Pencarian berita melalui ikon pencarian pada AppBar.
+- Halaman hasil pencarian dengan FutureBuilder.
+- Halaman detail berita.
+- Tombol untuk membuka berita dari sumber aslinya.
+- Pull-to-refresh untuk memperbarui berita.
+- Cache Future berdasarkan kategori agar tidak melakukan request berulang.
+- Empat kondisi tampilan: loading, error, empty, dan data.
+- Penanganan error API dengan pesan yang sesuai dan fitur coba lagi.
 
----
+## Teknologi yang Digunakan
 
-## Teknologi
-
-| Paket | Versi | Kegunaan |
-|---|---|---|
-| `dio` | ^5.7.0 | HTTP client |
-| `get` | ^4.6.6 | Navigasi |
-| `cached_network_image` | ^3.4.1 | Gambar berita |
-| `intl` | ^0.19.0 | Format tanggal Indonesia |
-| `url_launcher` | ^6.3.1 | Buka berita asli di browser |
-
----
+| Teknologi | Kegunaan |
+|---|---|
+| Flutter | Framework aplikasi |
+| Dart | Bahasa pemrograman |
+| GNews API | Sumber data berita |
+| Dio | HTTP client |
+| GetX | Navigasi aplikasi |
+| Cached Network Image | Menampilkan gambar berita |
+| Intl | Format tanggal |
+| URL Launcher | Membuka berita asli |
 
 ## Struktur Folder
 
-```
-lib/
-  main.dart               # Entry point, theme, GetMaterialApp
-  config/
-    env.dart              # Konfigurasi env dari dart-define
-  models/
-    article_model.dart    # Model artikel
-    news_response_model.dart  # Model respons API
-  services/
-    news_api_service.dart # Dio HTTP service
-    api_exception.dart    # Exception dan pesan error terpusat
-  views/
-    home_view.dart        # Halaman utama dengan kategori
-    search_view.dart      # Halaman hasil pencarian
-    detail_view.dart      # Halaman detail artikel
-  widgets/
-    article_card.dart     # Card artikel (featured & list)
-    error_view.dart       # Tampilan error dengan retry
-    news_image.dart       # Gambar berita dengan fallback
-    empty_state.dart      # Tampilan kosong
-  routes/
-    app_routes.dart       # Nama route
-    app_pages.dart        # Daftar halaman GetX
-  utils/
-    app_colors.dart       # Token warna design system
-    date_formatter.dart   # Format tanggal bahasa Indonesia
-
-config/
-  env.example.json        # Contoh konfigurasi (aman untuk git)
-  env.json                # API key ASLI (masuk .gitignore)
-
-docs/
-  screenshots/            # Screenshot error untuk pengumpulan
-    README.md             # Panduan pengambilan screenshot
-    error-invalid-api-key.png   (diisi manual)
-    error-no-internet.png       (diisi manual)
-
-DESIGN.md                 # Dokumentasi desain visual
+```text
+gamescope_id/
+├── android/
+├── config/
+│   ├── env.example.json
+│   └── env.json
+├── lib/
+│   ├── main.dart
+│   ├── config/
+│   ├── models/
+│   ├── services/
+│   ├── views/
+│   ├── widgets/
+│   ├── routes/
+│   └── utils/
+├── test/
+├── web/
+├── .gitignore
+├── DESIGN.md
+├── pubspec.yaml
+└── README.md
 ```
 
----
+## Persyaratan
+
+Sebelum menjalankan aplikasi, pastikan sudah tersedia:
+
+- Flutter SDK.
+- Dart SDK.
+- Google Chrome untuk menjalankan Flutter Web.
+- API Key dari GNews.
+
+Website GNews: https://gnews.io
 
 ## Instalasi
 
-### Prasyarat
-
-- Flutter SDK 3.5+
-- Chrome (untuk Flutter Web)
-- Akun GNews (https://gnews.io)
-
-### Langkah
+Clone repository:
 
 ```bash
-git clone <url-repo>
-cd nusa_news
+git clone https://github.com/SCORKINGS/gamescope_id.git
+```
+
+Masuk ke folder proyek:
+
+```bash
+cd gamescope_id
+```
+
+Install dependencies:
+
+```bash
 flutter pub get
 ```
 
----
+## Konfigurasi GNews API
 
-## Mendapatkan API Key GNews
+1. Kunjungi https://gnews.io.
+2. Buat akun GNews.
+3. Verifikasi email jika diminta.
+4. Salin API Key dari dashboard.
 
-1. Buka https://gnews.io
-2. Klik **Get API Key** dan daftar akun gratis
-3. Verifikasi email (wajib untuk mengaktifkan API key)
-4. Salin API key dari dashboard
-
-**Catatan Free Plan:**
-- 100 request per hari
-- Maksimal 10 artikel per request
-- Berita mungkin tidak real-time (ada delay)
-
----
-
-## Membuat config/env.json
-
-Salin dari contoh lalu isi API key:
+Salin file contoh konfigurasi:
 
 ```bash
 cp config/env.example.json config/env.json
 ```
 
-Isi `config/env.json`:
+Pada Windows PowerShell, gunakan:
+
+```powershell
+Copy-Item config/env.example.json config/env.json
+```
+
+Isi file `config/env.json` dengan API Key milik sendiri:
 
 ```json
 {
   "GNEWS_BASE_URL": "https://gnews.io/api/v4",
-  "GNEWS_API_KEY": "API_KEY_ANDA_DISINI"
+  "GNEWS_API_KEY": "API_KEY_ANDA"
 }
 ```
 
-**JANGAN** unggah `env.json` ke GitHub. File ini sudah masuk `.gitignore`.
-
----
+Penting: Jangan mengunggah `config/env.json` yang berisi API Key asli ke GitHub. File tersebut harus tetap diabaikan oleh `.gitignore`.
 
 ## Menjalankan Aplikasi
+
+Untuk Flutter Web:
 
 ```bash
 flutter run -d chrome --dart-define-from-file=config/env.json
@@ -143,78 +134,56 @@ Untuk Android:
 flutter run -d android --dart-define-from-file=config/env.json
 ```
 
----
+## Pengujian Aplikasi
 
-## Pengujian
+Beberapa pengujian yang dapat dilakukan:
 
-### Uji API dan Kategori
+1. Pengujian Kategori
+- Buka aplikasi.
+- Pilih beberapa kategori berita.
+- Pastikan artikel berubah sesuai kategori.
+- Kembali ke kategori sebelumnya untuk memeriksa penggunaan cache.
 
-1. Jalankan aplikasi
-2. Pastikan berita muncul di kategori pertama (Technology)
-3. Pindah ke kategori lain (Science, Entertainment, Sports, Business)
-4. Verifikasi berita berubah sesuai kategori
-5. Kembali ke kategori sebelumnya, pastikan tidak reload (cache aktif)
+2. Pengujian Pencarian
+- Tekan ikon pencarian pada AppBar.
+- Masukkan kata kunci, misalnya `GTA 6` atau `NVIDIA`.
+- Tekan tombol Cari.
+- Pastikan hasil pencarian ditampilkan.
 
-### Uji Pencarian
+3. Pengujian Detail Berita
+- Pilih salah satu artikel.
+- Periksa judul, sumber, tanggal, gambar, dan deskripsi.
+- Tekan tombol Baca Berita Asli.
 
-1. Ketuk ikon pencarian di AppBar
-2. Masukkan kata kunci, contoh: `NVIDIA RTX 50 Series`
-3. Ketuk Cari
-4. Verifikasi SearchView tampil dengan hasil
+4. Pengujian Pull-to-Refresh
+- Tarik daftar berita ke bawah.
+- Pastikan aplikasi melakukan permintaan ulang untuk memperbarui berita.
 
-### Uji Pull-to-Refresh
+5. Pengujian Kondisi FutureBuilder
+- Loading: ketika aplikasi sedang mengambil data.
+- Error: ketika terjadi kegagalan permintaan.
+- Empty: ketika tidak ada artikel ditemukan.
+- Data: ketika artikel berhasil dimuat.
 
-1. Tarik daftar berita ke bawah di HomeView
-2. Verifikasi indikator loading muncul dan data diperbarui
+6. Pengujian Error Handling
+- Gunakan API Key yang tidak valid untuk menguji kesalahan autentikasi.
+- Matikan koneksi internet untuk menguji penanganan koneksi.
+- Pastikan pesan error ditampilkan dan tombol Coba Lagi dapat digunakan.
 
-### Uji Detail
+## Catatan Penggunaan GNews
 
-1. Ketuk salah satu artikel
-2. Verifikasi judul, sumber, tanggal, deskripsi tampil
-3. Ketuk "Baca Berita Asli" dan verifikasi browser terbuka
+GNews menyediakan batas penggunaan API berdasarkan paket yang digunakan. Pada Free Plan terdapat batas request harian dan keterlambatan publikasi berita.
 
----
+Jumlah dan ketersediaan artikel dapat berubah sesuai hasil pencarian dari GNews.
 
-## Mengambil Dua Screenshot Error
+## Keamanan API Key
 
-Lihat panduan lengkap di [docs/screenshots/README.md](docs/screenshots/README.md).
+API Key yang digunakan dalam aplikasi Flutter Web dapat terlihat melalui hasil build JavaScript maupun permintaan jaringan di browser.
 
-**Ringkasan:**
+Oleh karena itu, konfigurasi ini ditujukan untuk kebutuhan praktikum dan pengembangan lokal. Untuk penggunaan produksi, API Key sebaiknya disimpan di server melalui backend atau proxy API.
 
-**Skenario 1 (API Key salah):**
-```bash
-# Ganti sementara di config/env.json:
-# "GNEWS_API_KEY": "INVALID_KEY_12345"
-flutter run -d chrome --dart-define-from-file=config/env.json
-# Screenshot pesan "API Key tidak valid..."
-# Kembalikan API key asli setelah selesai
-```
+## Pembuat
 
-**Skenario 2 (Offline):**
-```bash
-flutter run -d chrome --dart-define-from-file=config/env.json
-# Buka DevTools > Network > Offline
-# Screenshot pesan "Tidak ada koneksi internet..."
-```
+GameScope ID
 
----
-
-## Catatan Keamanan API Key
-
-> **PENTING:** API key yang tertanam dalam build Flutter Web dapat dilihat melalui file JavaScript hasil build atau Chrome DevTools > Network tab. Konfigurasi ini hanya untuk pengembangan lokal. Jangan publikasikan build web dengan API key tertanam di dalamnya.
-
-Untuk produksi: gunakan proxy server (misalnya Cloudflare Worker) yang menyimpan API key di sisi server.
-
----
-
-## Screenshot Aplikasi
-
-| Beranda (Live GNews) | Halaman Detail Berita | Error HTTP 401 | Error Offline / No Internet |
-| :---: | :---: | :---: | :---: |
-| ![Live App Home](docs/screenshots/app-home-live.png) | ![Live Detail View](docs/screenshots/detail-view-live.png) | ![Error Invalid API Key](docs/screenshots/error-invalid-api-key.png) | ![Error No Internet](docs/screenshots/error-no-internet.png) |
-
----
-
-## Dibuat Oleh
-
-Praktikum Pemrograman Mobile Topik 11 - GameScope ID
+Praktikum Pemrograman Mobile – Topik 11
